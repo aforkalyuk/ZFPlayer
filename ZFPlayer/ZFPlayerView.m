@@ -1005,6 +1005,17 @@ typedef NS_ENUM(NSInteger, PanDirection){
     }
 }
 
+- (void)cancelFullscreen {
+    if (ZFPlayerShared.isLockScreen) {
+        [self unLockTheScreen];
+        return;
+    }
+    if (self.isFullScreen) {
+        [self interfaceOrientation:UIInterfaceOrientationPortrait];
+        self.isFullScreen = NO;
+    }
+}
+
 #pragma mark - NSNotification Action
 
 /**
