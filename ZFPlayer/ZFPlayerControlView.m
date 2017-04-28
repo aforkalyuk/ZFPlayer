@@ -589,6 +589,14 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 
 #pragma mark - setter
 
+- (void)setHasBackButton:(BOOL)hasBackButton {
+    self.backBtn.hidden = !hasBackButton;
+}
+
+- (void)setHasFullscreenButton:(BOOL)hasFullscreenButton {
+    self.fullScreenBtn.hidden = !hasFullscreenButton;
+}
+
 - (void)setShrink:(BOOL)shrink {
     _shrink = shrink;
     self.closeBtn.hidden = !shrink;
@@ -601,6 +609,14 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 }
 
 #pragma mark - getter
+
+- (BOOL)hasBackButton {
+    return !self.backBtn.hidden;
+}
+
+- (BOOL)hasFullscreenButton {
+    return !self.fullScreenBtn.hidden;
+}
 
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
@@ -794,7 +810,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 - (UIButton *)failBtn {
     if (!_failBtn) {
         _failBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-        [_failBtn setTitle:@"加载失败,点击重试" forState:UIControlStateNormal];
+        [_failBtn setTitle:@"Fail. Tap to retry." forState:UIControlStateNormal];
         [_failBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _failBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
         _failBtn.backgroundColor = RGBA(0, 0, 0, 0.7);

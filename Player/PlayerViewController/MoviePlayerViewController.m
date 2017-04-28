@@ -155,7 +155,10 @@
          *   // 控制层传nil，默认使用ZFPlayerControlView(如自定义可传自定义的控制层)
          *   // 等效于 [_playerView playerModel:self.playerModel];
          ******************************************************************************************/
-        [_playerView playerControlView:nil playerModel:self.playerModel];
+        ZFPlayerControlView *controlView = [[ZFPlayerControlView alloc] init];
+        controlView.hasBackButton = NO;
+        controlView.hasFullscreenButton = NO;
+        [_playerView playerControlView:controlView playerModel:self.playerModel];
         
         // 设置代理
         _playerView.delegate = self;

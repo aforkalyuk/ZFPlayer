@@ -125,7 +125,7 @@
         playerModel.fatherViewTag    = weakCell.picView.tag;
         
         // 设置播放控制层和model
-        [weakSelf.playerView playerControlView:nil playerModel:playerModel];
+        [weakSelf.playerView playerControlView:self.controlView playerModel:playerModel];
         // 下载功能
         weakSelf.playerView.hasDownload = YES;
         // 自动播放
@@ -159,6 +159,8 @@
 - (ZFPlayerControlView *)controlView {
     if (!_controlView) {
         _controlView = [[ZFPlayerControlView alloc] init];
+        _controlView.hasBackButton = NO;
+        _controlView.hasFullscreenButton = NO;
     }
     return _controlView;
 }

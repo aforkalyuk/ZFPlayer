@@ -27,4 +27,7 @@
 
 @interface ZFPlayerControlView : UIView 
 
+@property (assign, nonatomic) BOOL hasBackButton;
+@property (assign, nonatomic) BOOL hasFullscreenButton;
+
 @end
