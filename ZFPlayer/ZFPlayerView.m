@@ -69,6 +69,8 @@ typedef NS_ENUM(NSInteger, PanDirection){
 @property (nonatomic, assign) BOOL                   isLocalVideo;
 /** slider上次的值 */
 @property (nonatomic, assign) CGFloat                sliderLastValue;
+/** 是否再次设置URL播放视频 */
+@property (nonatomic, assign) BOOL                   repeatToPlay;
 /** 播放完了*/
 @property (nonatomic, assign) BOOL                   playDidEnd;
 /** 进入后台*/

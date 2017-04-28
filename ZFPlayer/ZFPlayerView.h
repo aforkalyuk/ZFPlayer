@@ -78,8 +78,6 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
 @property (nonatomic, assign) BOOL                    cellPlayerOnCenter;
 /** player在栈上，即此时push或者模态了新控制器 */
 @property (nonatomic, assign) BOOL                    playerPushedOrPresented;
-/** 是否再次设置URL播放视频 */
-@property (nonatomic, assign) BOOL                    repeatToPlay;
 
 @property (nonatomic, assign, readonly) BOOL          isFullScreen;
 
