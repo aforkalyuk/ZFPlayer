@@ -29,5 +29,6 @@
 
 @property (assign, nonatomic) BOOL hasBackButton;
 @property (assign, nonatomic) BOOL hasFullscreenButton;
+@property (assign, nonatomic) BOOL hasBottomProgress;
 
 @end

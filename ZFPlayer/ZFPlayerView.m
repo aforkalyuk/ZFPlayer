@@ -1060,6 +1060,11 @@ typedef NS_ENUM(NSInteger, PanDirection){
  */
 - (void)appDidEnterPlayground {
     self.didEnterBackground     = NO;
+    
+    if ([self.delegate respondsToSelector:@selector(canPlay)] && ![self.delegate canPlay]) {
+        return;
+    }
+    
     // 根据是否锁定屏幕方向 来恢复单例里锁定屏幕的方向
     ZFPlayerShared.isLockScreen = self.isLocked;
     if (!self.isPauseByUser) {
