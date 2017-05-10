@@ -393,9 +393,12 @@ static dispatch_queue_t	globalNotificationQueue( void )
         NSError *error = nil;
         AVKeyValueStatus status = [asset statusOfValueForKey:@"playable" error:&error];
         switch (status) {
-            case AVKeyValueStatusLoaded:
+            case AVKeyValueStatusLoaded: {
                 // Sucessfully loaded, continue processing
-                [self prepareToPlayAsset:asset];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self prepareToPlayAsset:asset];
+                });
+            }
                 break;
             case AVKeyValueStatusFailed:
                 // Examine NSError pointer to determine failure
