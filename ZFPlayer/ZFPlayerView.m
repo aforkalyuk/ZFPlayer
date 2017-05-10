@@ -390,30 +390,30 @@ static dispatch_queue_t	globalNotificationQueue( void )
 
     // Tells the asset to load the values of any of the specified keys that are not already loaded.
     [asset loadValuesAsynchronouslyForKeys:@[@"playable"] completionHandler:^{
-        NSError *error = nil;
-        AVKeyValueStatus status = [asset statusOfValueForKey:@"playable" error:&error];
-        switch (status) {
-            case AVKeyValueStatusLoaded: {
-                // Sucessfully loaded, continue processing
-                dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSError *error = nil;
+            AVKeyValueStatus status = [asset statusOfValueForKey:@"playable" error:&error];
+            switch (status) {
+                case AVKeyValueStatusLoaded: {
+                    // Sucessfully loaded, continue processing
                     [self prepareToPlayAsset:asset];
-                });
+                }
+                    break;
+                case AVKeyValueStatusFailed:
+                    // Examine NSError pointer to determine failure
+                    self.state = ZFPlayerStateFailed;
+                    break;
+                    
+                case AVKeyValueStatusCancelled:
+                    // Loading cancelled
+                    self.state = ZFPlayerStateStopped;
+                    break;
+                    
+                default:
+                    // Handle all other cases
+                    break;
             }
-                break;
-            case AVKeyValueStatusFailed:
-                // Examine NSError pointer to determine failure
-                self.state = ZFPlayerStateFailed;
-                break;
-                
-            case AVKeyValueStatusCancelled:
-                // Loading cancelled
-                self.state = ZFPlayerStateStopped;
-                break;
-                
-            default:
-                // Handle all other cases
-                break;
-        }
+        });
     }];
 }
 
@@ -1086,6 +1086,9 @@ static dispatch_queue_t	globalNotificationQueue( void )
             [self.controlView zf_playerPlayEnd];
         }
     }
+    if ([self.delegate respondsToSelector:@selector(zf_playerDidPlayToEnd)]) {
+        [self.delegate zf_playerDidPlayToEnd];
+    }
 }
 
 /**
@@ -1105,7 +1108,7 @@ static dispatch_queue_t	globalNotificationQueue( void )
 - (void)appDidEnterPlayground {
     self.didEnterBackground     = NO;
     
-    if ([self.delegate respondsToSelector:@selector(canPlay)] && ![self.delegate canPlay]) {
+    if ([self.delegate respondsToSelector:@selector(zf_shouldPlay)] && ![self.delegate zf_shouldPlay]) {
         return;
     }
     

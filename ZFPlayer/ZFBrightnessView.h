@@ -32,6 +32,7 @@
 @property (nonatomic, assign) BOOL     isStatusBarHidden;
 /** 是否是横屏状态 */
 @property (nonatomic, assign) BOOL     isLandscape;
+
 + (instancetype)sharedBrightnessView;
 
 @end

@@ -262,7 +262,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     
     [self.activity mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self);
-        make.width.with.height.mas_equalTo(45);
+        make.width.with.height.mas_equalTo(65);
     }];
     
     [self.failBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1094,7 +1094,7 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 
 /** 视频加载失败 */
 - (void)zf_playerItemStatusFailed:(NSError *)error {
-    self.failBtn.hidden = NO;
+  //  self.failBtn.hidden = NO;
 }
 
 /** 加载的菊花 */
