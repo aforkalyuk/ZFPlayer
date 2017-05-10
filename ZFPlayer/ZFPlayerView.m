@@ -385,9 +385,34 @@ static dispatch_queue_t	globalNotificationQueue( void )
  *  设置Player相关参数
  */
 - (void)configZFPlayer {
-    self.urlAsset = [AVURLAsset assetWithURL:self.videoURL];
-    [self.urlAsset.resourceLoader setDelegate:self.assetLoaderDelegate queue:globalNotificationQueue()];
-    
+    AVURLAsset *asset = [AVURLAsset assetWithURL:self.videoURL];
+    [asset.resourceLoader setDelegate:self.assetLoaderDelegate queue:globalNotificationQueue()];
+
+    // Tells the asset to load the values of any of the specified keys that are not already loaded.
+    [asset loadValuesAsynchronouslyForKeys:@[@"playable"] completionHandler:^{
+        NSError *error = nil;
+        AVKeyValueStatus status = [asset statusOfValueForKey:@"playable" error:&error];
+        switch (status) {
+            case AVKeyValueStatusLoaded:
+                // Sucessfully loaded, continue processing
+                [self prepareToPlayAsset:asset];
+                break;
+            case AVKeyValueStatusFailed:
+                // Examine NSError pointer to determine failure
+                break;
+            case AVKeyValueStatusCancelled:
+                // Loading cancelled
+                break;
+            default:
+                // Handle all other cases
+                break;
+        }
+    }];
+}
+
+- (void)prepareToPlayAsset:(AVURLAsset *)asset {
+    self.urlAsset = asset;
+
     // 初始化playerItem
     self.playerItem = [AVPlayerItem playerItemWithAsset:self.urlAsset];
     // 每次都重新创建Player，替换replaceCurrentItemWithPlayerItem:，该方法阻塞线程
