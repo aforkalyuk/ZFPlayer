@@ -402,10 +402,14 @@ static dispatch_queue_t	globalNotificationQueue( void )
                 break;
             case AVKeyValueStatusFailed:
                 // Examine NSError pointer to determine failure
+                self.state = ZFPlayerStateFailed;
                 break;
+                
             case AVKeyValueStatusCancelled:
                 // Loading cancelled
+                self.state = ZFPlayerStateStopped;
                 break;
+                
             default:
                 // Handle all other cases
                 break;
