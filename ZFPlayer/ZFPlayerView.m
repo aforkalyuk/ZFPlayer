@@ -39,6 +39,16 @@ typedef NS_ENUM(NSInteger, PanDirection){
     PanDirectionVerticalMoved    // 纵向移动
 };
 
+static dispatch_queue_t	globalNotificationQueue( void )
+{
+    static dispatch_queue_t globalQueue = 0;
+    static dispatch_once_t getQueueOnce = 0;
+    dispatch_once(&getQueueOnce, ^{
+        globalQueue = dispatch_queue_create("Asset resource loader queue", NULL);
+    });
+    return globalQueue;
+}
+
 @interface ZFPlayerView () <UIGestureRecognizerDelegate,UIAlertViewDelegate>
 
 /** 播放属性 */
@@ -376,6 +386,8 @@ typedef NS_ENUM(NSInteger, PanDirection){
  */
 - (void)configZFPlayer {
     self.urlAsset = [AVURLAsset assetWithURL:self.videoURL];
+    [self.urlAsset.resourceLoader setDelegate:self.assetLoaderDelegate queue:globalNotificationQueue()];
+    
     // 初始化playerItem
     self.playerItem = [AVPlayerItem playerItemWithAsset:self.urlAsset];
     // 每次都重新创建Player，替换replaceCurrentItemWithPlayerItem:，该方法阻塞线程

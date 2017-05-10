@@ -22,6 +22,8 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
+
 #import "ZFPlayer.h"
 #import "ZFPlayerControlView.h"
 #import "ZFPlayerModel.h"
@@ -59,6 +61,8 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
 };
 
 @interface ZFPlayerView : UIView <ZFPlayerControlViewDelagate>
+
+@property (nonatomic, weak) id <AVAssetResourceLoaderDelegate> assetLoaderDelegate;
 
 /** 设置playerLayer的填充模式 */
 @property (nonatomic, assign) ZFPlayerLayerGravity    playerLayerGravity;
